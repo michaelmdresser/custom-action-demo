@@ -5,11 +5,21 @@ image := "myprojectvariant:" + tag
 buildenv := "GOOS=linux GARCH=amd64 CGO_ENABLED=0"
 
 build:
-    cd ../custom-action-demo-code && {{buildenv}} go build -o myprojectvariant cmd/myprojectvariant/main.go
-    cd ../custom-action-demo-code && docker build -f ./cmd/myprojectvariant/Dockerfile . -t "{{image}}"
+    cd ../custom-action-demo-code && \
+        {{buildenv}} go build \
+        -o myprojectvariant \
+        cmd/myprojectvariant/main.go
+
+    cd ../custom-action-demo-code && \
+        docker build \
+        -f ./cmd/myprojectvariant/Dockerfile \
+        . \
+        -t "{{image}}"
 
 updateaction:
-    sed -i 's|^  image:.*$|  image: "docker://{{image}}"|' action.yaml
+    sed -i \
+        's|^  image:.*$|  image: "docker://{{image}}"|' \
+        action.yaml
 
 test: build updateaction
     # --pull=false explanation:
