@@ -1,0 +1,5 @@
+name: 'Run Docker container'
+description: 'Runs an external Docker container'
+runs:
+  using: 'docker'
+  image: "docker://myprojectvariant:1678518710"

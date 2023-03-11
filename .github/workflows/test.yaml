@@ -1,0 +1,23 @@
+name: Test
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the current version of the repository
+        uses: actions/checkout@v3
+
+      - name: Run the current version of the custom Action
+        # This is an interesting way to call a locally-defined action.yaml.
+        # The path is expection to contain a file called action.yaml or
+        # action.yml which will be run as the Action.
+        #
+        # If action.yaml is in a subfolder of the respository then this uses:
+        # statemement should contain the path of the folder container the
+        # action.
+        #
+        # E.g. if the action is in ./actions/foo/action.yaml, the statement
+        # should be "uses: ./actions/foo"
+        uses: ./
